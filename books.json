@@ -1,100 +1,114 @@
-{
-  "books": [
-    {
-      "title": "Designing User Experience: A Guide to Hci, UX and Interaction Design",
-      "category": "UX",
-      "author": "David Benyon",
-      "price": 645.15
-    },
-    {
-      "title": "The Design of Everyday Things",
-      "category": "UX",
-      "author": "Don Norman",
-      "price": 172.24
-    },
-    {
-      "title": "UX Strategy",
-      "category": "UX",
-      "author": "Jaime Levy",
-      "price": 411
-    },
-    {
-      "title": "Universal Principles of Design",
-      "category": "UX",
-      "author": "William Lidwell, Kritina Holden, Jill Butler",
-      "price": 306
-    },
-    {
-      "title": "Learn HTML for Beginners: The Illustrated Guide to Coding",
-      "category": "HTML",
-      "author": "Jo Foster",
-      "price": 268
-    },
-    {
-      "title": "The Absolute Beginner's Guide to HTML and CSS",
-      "category": "HTML",
-      "author": "Kevin Wilson",
-      "price": 343
-    },
-    {
-      "title": "Head First HTML and CSS",
-      "category": "HTML",
-      "author": "Elisabeth Robson",
-      "price": 446
-    },
-    {
-      "title": "HTML & CSS: Design and Build Web Sites",
-      "category": "HTML",
-      "author": "J Duckett",
-      "price": 240
-    },
-    {
-      "title": "CSS: The Definitive Guide",
-      "category": "CSS",
-      "author": "Eric A. Meyer, Estelle Weyl",
-      "price": 534
-    },
-    {
-      "title": "CSS in Depth",
-      "category": "CSS",
-      "author": "Keith J Grant",
-      "price": 332
-    },
-    {
-      "title": "CSS Mastery",
-      "category": "CSS",
-      "author": "Andy Budd , Emil Björklund",
-      "price": 574
-    },
-    {
-      "title": "CSS Master 3e",
-      "category": "CSS",
-      "author": "Tiffany B Brown",
-      "price": 372
-    },
-    {
-      "title": "JavaScript - The Definitive Guide",
-      "category": "JS",
-      "author": "David FLanagan",
-      "price": 569
-    },
-    {
-      "title": "JavaScript from Frontend to Backend",
-      "category": "JS",
-      "author": "Eric Sarrion",
-      "price": 322
-    },
-    {
-      "title": "Coding with JavaScript For Dummies",
-      "category": "JS",
-      "author": "C Minnick",
-      "price": 270
-    },
-    {
-      "title": "Head First JavaScript Programming",
-      "category": "JS",
-      "author": "Eric Freeman",
-      "price": 465
-    }
-  ]
-}
+[
+  {
+    "title": "Designing User Experience: A Guide to Hci, UX and Interaction Design",
+    "category": "UX",
+    "author": "David Benyon",
+    "price": 645.15,
+    "img": "https://s1.adlibris.com/images/28652140/designing-user-experience.jpg"
+  },
+  {
+    "title": "The Design of Everyday Things",
+    "category": "UX",
+    "author": "Don Norman",
+    "price": 172.24,
+    "img": "https://s1.adlibris.com/images/28652140/designing-user-experience.jpg"
+  },
+  {
+    "title": "UX Strategy",
+    "category": "UX",
+    "author": "Jaime Levy",
+    "price": 411,
+    "img": "https://s1.adlibris.com/images/28652140/designing-user-experience.jpg"
+  },
+  {
+    "title": "Universal Principles of Design",
+    "category": "UX",
+    "author": "William Lidwell, Kritina Holden, Jill Butler",
+    "price": 306,
+    "img": "https://s1.adlibris.com/images/28652140/designing-user-experience.jpg"
+  },
+  {
+    "title": "Learn HTML for Beginners: The Illustrated Guide to Coding",
+    "category": "HTML",
+    "author": "Jo Foster",
+    "price": 268,
+    "img": "https://s1.adlibris.com/images/28652140/designing-user-experience.jpg"
+  },
+  {
+    "title": "The Absolute Beginner's Guide to HTML and CSS",
+    "category": "HTML",
+    "author": "Kevin Wilson",
+    "price": 343,
+    "img": "https://s1.adlibris.com/images/28652140/designing-user-experience.jpg"
+  },
+  {
+    "title": "Head First HTML and CSS",
+    "category": "HTML",
+    "author": "Elisabeth Robson",
+    "price": 446,
+    "img": "https://s1.adlibris.com/images/28652140/designing-user-experience.jpg"
+  },
+  {
+    "title": "HTML & CSS: Design and Build Web Sites",
+    "category": "HTML",
+    "author": "J Duckett",
+    "price": 240,
+    "img": "https://s1.adlibris.com/images/28652140/designing-user-experience.jpg"
+  },
+  {
+    "title": "CSS: The Definitive Guide",
+    "category": "CSS",
+    "author": "Eric A. Meyer, Estelle Weyl",
+    "price": 534,
+    "img": "https://s1.adlibris.com/images/28652140/designing-user-experience.jpg"
+  },
+  {
+    "title": "CSS in Depth",
+    "category": "CSS",
+    "author": "Keith J Grant",
+    "price": 332,
+    "img": "https://s1.adlibris.com/images/28652140/designing-user-experience.jpg"
+  },
+  {
+    "title": "CSS Mastery",
+    "category": "CSS",
+    "author": "Andy Budd , Emil Björklund",
+    "price": 574,
+    "img": "https://s1.adlibris.com/images/28652140/designing-user-experience.jpg"
+  },
+  {
+    "title": "CSS Master 3e",
+    "category": "CSS",
+    "author": "Tiffany B Brown",
+    "price": 372,
+    "img": "https://s1.adlibris.com/images/28652140/designing-user-experience.jpg"
+  },
+  {
+    "title": "JavaScript - The Definitive Guide",
+    "category": "JS",
+    "author": "David FLanagan",
+    "price": 569,
+    "img": "https://s1.adlibris.com/images/28652140/designing-user-experience.jpg"
+  },
+  {
+    "title": "JavaScript from Frontend to Backend",
+    "category": "JS",
+    "author": "Eric Sarrion",
+    "price": 322,
+    "img": "https://s1.adlibris.com/images/28652140/designing-user-experience.jpg"
+  },
+  {
+    "title": "Coding with JavaScript For Dummies",
+    "category": "JS",
+    "author": "C Minnick",
+    "price": 270,
+    "img": "https://s1.adlibris.com/images/28652140/designing-user-experience.jpg"
+  },
+  {
+    "title": "Head First JavaScript Programming",
+    "category": "JS",
+    "author": "Eric Freeman",
+    "price": 465,
+    "img": "https://s1.adlibris.com/images/28652140/designing-user-experience.jpg"
+  }
+]
