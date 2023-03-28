@@ -1,9 +1,31 @@
 async function addToCart(selectedTitle, selectedPrice) {
   console.log(`${selectedTitle.textContent} has been added to cart`);
   console.log(` for ${selectedPrice.textContent}`);
+  payload = {
+    title: selectedTitle.textContent,
+    price: selectedPrice.textContent,
+  };
+  bookCart.push(payload);
+  //loadCart function
 }
-let booksState = [];
 
+let booksState = [];
+let bookCart = [];
+
+document.querySelector(".cart").addEventListener("click", loadCart);
+function loadCart() {
+  let htmlMain = document.querySelector("shop-cart");
+  bookCart.map((item) => console.log(item));
+  console.log("lol");
+  let html = "";
+  bookCart.map((e) => (html += `<h1>${e.title}</h1>`));
+  htmlMain.innerHTML = html;
+}
+
+function closeCart() {
+  // close the shopping cart here
+  let htmlMain = document.querySelector("shop-cart");
+}
 /** Get json data by url, return data */
 async function getBooks(url) {
   console.log("come to get books");
@@ -43,13 +65,13 @@ function loadHome(bookState) {
             <h6 class="card-category"> Category: ${book.category} </h6>
         </div>
         <div class="card-body">
-            <a href="#" id="popDetail" class="card-link" data-bs-toggle="modal" data-bs-target="#popModal">Details</a>
+            <a href="#" id="popDetail" class="card-link" data-bs-toggle="modal" data-bs-target="#popModal-${index}">Details</a>
             <a href="#" id="purchase" class="card-link">Purchase</a>
         </div>
     </div>
     </div>
 
-    <div class="modal fade" id="popModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="popModal-${index}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
             <div class="modal-header">
@@ -60,14 +82,14 @@ function loadHome(bookState) {
                 <div class="card h-100">
                     <div class="card-body">
                         <h6 class="card-secondary"> Author: ${book.author} </h6>
-                        <h6 class="card-secondary"> Price: ${book.price} kr </h6>
+                        <h6 class="card-secondary modal-price"> Price: ${book.price} kr </h6>
                         <h6 class="card-secondary"> Category: ${book.category} </h6>
                         <h6 class="card-secondary"> Description: ${book.category} </h6>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Purchase</button>
+                <button type="button" class="btn btn-primary modal_purchase">Purchase</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
             </div>
@@ -92,7 +114,26 @@ function loadHome(bookState) {
       addToCart(selectedTitle, selectedPrice);
     });
   });
+
   console.log(purchase);
+
+  let modal_purchases = document.querySelectorAll(".modal_purchase");
+  console.log("hellow ", modal_purchases);
+
+  modal_purchases.forEach((modal_purchase) => {
+    modal_purchase.addEventListener("click", (event) => {
+      event.preventDefault();
+      let selectedTitle =
+        modal_purchase.parentElement.parentElement.querySelector(
+          ".modal-title"
+        );
+      let selectedPrice =
+        modal_purchase.parentElement.parentElement.querySelector(
+          ".modal-price"
+        );
+      addToCart(selectedTitle, selectedPrice);
+    });
+  });
 }
 
 /** entry point to index.html
