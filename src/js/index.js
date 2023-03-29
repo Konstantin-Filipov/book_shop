@@ -6,26 +6,27 @@ async function addToCart(selectedTitle, selectedPrice) {
     price: selectedPrice.textContent,
   };
   bookCart.push(payload);
-  //loadCart function
 }
 
 let booksState = [];
 let bookCart = [];
 
-document.querySelector(".cart").addEventListener("click", loadCart);
+
+document.getElementById("dropdownMenuButton").addEventListener("click", loadCart);
 function loadCart() {
-  let htmlMain = document.querySelector("shop-cart");
+  let htmlMain = document.getElementsByClassName("dropdown-menu")[0];
   bookCart.map((item) => console.log(item));
-  console.log("lol");
   let html = "";
-  bookCart.map((e) => (html += `<h1>${e.title}</h1>`));
+  bookCart.map((e) =>(html += `<a class="dropdown-item" href="#">${e.title}</a>`));
   htmlMain.innerHTML = html;
+  htmlMain.classList.add("show");
 }
 
-function closeCart() {
-  // close the shopping cart here
-  let htmlMain = document.querySelector("shop-cart");
-}
+// Add an event listener to the dropdown menu to remove the "show" class when the menu is closed
+document.getElementsByClassName("dropdown-menu")[0].addEventListener("mouseleave", function() {
+  this.classList.remove("show");
+});
+
 /** Get json data by url, return data */
 async function getBooks(url) {
   console.log("come to get books");
@@ -118,7 +119,6 @@ function loadHome(bookState) {
   console.log(purchase);
 
   let modal_purchases = document.querySelectorAll(".modal_purchase");
-  console.log("hellow ", modal_purchases);
 
   modal_purchases.forEach((modal_purchase) => {
     modal_purchase.addEventListener("click", (event) => {
