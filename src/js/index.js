@@ -1,13 +1,54 @@
+async function bookRepeat(selectedTitle)
+{
+  for(let i = 0; i < bookCart.length; i++)
+  {
+    if (selectedTitle == bookCart[i].title)
+    {
+      return true;
+    }
+  }
+  return false;
+}
+
+async function getBookIndex(selectedTitle)
+{
+  let index;
+  console.log("in get index function");
+  for(let i = 0; i < bookCart.length; i++)
+  {
+    console.log(`${selectedTitle} ?= ${bookCart[i].title}`);
+    if (selectedTitle == bookCart[i].title)
+    {
+      console.log("matched!");
+      return i;
+    }
+  }
+}
+
 async function addToCart(selectedTitle, selectedPrice) {
-  console.log(`${selectedTitle.textContent} has been added to cart`);
-  console.log(` for ${selectedPrice.textContent}`);
+
+  let defaultQuantity = 1;
+
   payload = {
     title: selectedTitle.textContent,
     price: selectedPrice.textContent,
+    quantity: defaultQuantity
   };
-  bookCart.push(payload);
+
+  //if there is no such book title in the cart, add it to cart 
+  if (!(await bookRepeat(payload.title)))
+  {
+    bookCart.push(payload);
+  }
+  //if there is such book title already in shopping cart
+  else if((await bookRepeat(payload.title)))
+  {
+    let index = await getBookIndex(payload.title)
+    bookCart[index].quantity += 1;  //increase quantity of the book by 1
+  }
 }
 
+let overallPrice = 0;
 let booksState = [];
 let bookCart = [];
 
@@ -108,10 +149,10 @@ function loadHome(bookState) {
   purchases.forEach((purchase) => {
     purchase.addEventListener("click", (event) => {
       event.preventDefault();
-      let selectedTitle =
-        purchase.parentElement.parentElement.querySelector(".card-title");
-      let selectedPrice =
-        purchase.parentElement.parentElement.querySelector(".card-price");
+      
+      let selectedTitle = purchase.parentElement.parentElement.querySelector(".card-title");
+      let selectedPrice = purchase.parentElement.parentElement.querySelector(".card-price");
+      
       addToCart(selectedTitle, selectedPrice);
     });
   });
@@ -119,18 +160,14 @@ function loadHome(bookState) {
   console.log(purchase);
 
   let modal_purchases = document.querySelectorAll(".modal_purchase");
-
   modal_purchases.forEach((modal_purchase) => {
     modal_purchase.addEventListener("click", (event) => {
+      
       event.preventDefault();
-      let selectedTitle =
-        modal_purchase.parentElement.parentElement.querySelector(
-          ".modal-title"
-        );
-      let selectedPrice =
-        modal_purchase.parentElement.parentElement.querySelector(
-          ".modal-price"
-        );
+      
+      let selectedTitle = modal_purchase.parentElement.parentElement.querySelector(".modal-title");
+      let selectedPrice = modal_purchase.parentElement.parentElement.querySelector(".modal-price");
+      
       addToCart(selectedTitle, selectedPrice);
     });
   });
