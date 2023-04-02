@@ -35,17 +35,22 @@ async function addToCart(selectedTitle, selectedPrice) {
     quantity: defaultQuantity
   };
 
-  //if there is no such book title in the cart, add it to cart 
+  //if book title is NOT in shop cart, add to shop cart 
   if (!(await bookRepeat(payload.title)))
   {
     bookCart.push(payload);
   }
-  //if there is such book title already in shopping cart
+  //if book title is already in shop cart, increase quantity
   else if((await bookRepeat(payload.title)))
   {
     let index = await getBookIndex(payload.title)
     bookCart[index].quantity += 1;  //increase quantity of the book by 1
   }
+  
+  //update overall price
+  let splitPrice = payload.price.split(' ');
+  let price = parseFloat(splitPrice[2]);
+  overallPrice += price;
 }
 
 let overallPrice = 0;
@@ -58,7 +63,8 @@ function loadCart() {
   let htmlMain = document.getElementsByClassName("dropdown-menu")[0];
   bookCart.map((item) => console.log(item));
   let html = "";
-  bookCart.map((e) =>(html += `<a class="dropdown-item" href="#">${e.title}</a>`));
+  bookCart.map((e) =>(html += `<a class="dropdown-item" href="#">${e.title} ${e.price} ${e.quantity}</a>`));
+  html += `<div class="dropdown-divider"></div><a class="dropdown-item" href="#">Total sum: ${overallPrice.toFixed(2)} SEK</a>`;
   htmlMain.innerHTML = html;
   htmlMain.classList.add("show");
 }
