@@ -61,8 +61,9 @@ let bookCart = [];
 document.getElementById("dropdownMenuButton").addEventListener("click", loadCart);
 function loadCart() {
   let htmlMain = document.getElementsByClassName("dropdown-menu")[0];
-  bookCart.map((item) => console.log(item));
   let html = "";
+
+  bookCart.map((item) => console.log(item));
   bookCart.map((e) =>(html += `<a class="dropdown-item" href="#">${e.title} ${e.price} ${e.quantity}</a>`));
   html += `<div class="dropdown-divider"></div><a class="dropdown-item" href="#">Total sum: ${overallPrice.toFixed(2)} SEK</a>`;
   htmlMain.innerHTML = html;
