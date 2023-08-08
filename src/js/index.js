@@ -1,3 +1,8 @@
+//global vars
+var overallPrice = 0;
+let booksState = [];
+let bookCart = [];
+
 async function bookRepeat(selectedTitle)
 {
   for(let i = 0; i < bookCart.length; i++)
@@ -12,7 +17,7 @@ async function bookRepeat(selectedTitle)
 
 async function getBookIndex(selectedTitle)
 {
-  let index;
+
   console.log("in get index function");
   for(let i = 0; i < bookCart.length; i++)
   {
@@ -24,6 +29,22 @@ async function getBookIndex(selectedTitle)
     }
   }
 }
+async function removeFromCart(title, price)
+{
+  console.log("comsddddddddddddddddddd", title,price);
+  let index = await getBookIndex(title)
+
+  //delete the item from array
+  bookCart.splice(index, 1)
+
+  //update overall price
+  overallPrice -= Number(price);
+
+  console.log("remove from cart function: ",overallPrice);
+  
+  loadCart(); // Update the cart display
+}
+
 
 async function addToCart(selectedTitle, selectedPrice) {
 
@@ -31,10 +52,10 @@ async function addToCart(selectedTitle, selectedPrice) {
 
   payload = {
     title: selectedTitle.textContent,
-    price: selectedPrice.textContent,
+    price: Number(selectedPrice.textContent),
     quantity: defaultQuantity
   };
-
+  console.log("Payoad data: ", payload.price);
   //if book title is NOT in shop cart, add to shop cart 
   if (!(await bookRepeat(payload.title)))
   {
@@ -48,26 +69,85 @@ async function addToCart(selectedTitle, selectedPrice) {
   }
   
   //update overall price
-  let splitPrice = payload.price.split(' ');
-  let price = parseFloat(splitPrice[2]);
+
+  let price = payload.price;
+  console.log("in AddToCart: price", price);
   overallPrice += price;
+  console.log("in AddToCart: ", overallPrice);
 }
 
-let overallPrice = 0;
-let booksState = [];
-let bookCart = [];
 
 
 document.getElementById("dropdownMenuButton").addEventListener("click", loadCart);
+
 function loadCart() {
+  
   let htmlMain = document.getElementsByClassName("dropdown-menu")[0];
-  let html = "";
+  let htmlCart = "";
 
   bookCart.map((item) => console.log(item));
-  bookCart.map((e) =>(html += `<a class="dropdown-item" href="#">${e.title} ${e.price} ${e.quantity}</a>`));
-  html += `<div class="dropdown-divider"></div><a class="dropdown-item" href="#">Total sum: ${overallPrice.toFixed(2)} SEK</a>`;
-  htmlMain.innerHTML = html;
+  bookCart.map((e, index) =>(htmlCart += `
+    <div class="d-flex align-items-center p-1">
+      <a class="dropdown-item" href="#">${e.title} ${e.price}</a>
+      <button class="decrement-btn btn btn-outline-secondary" data-index="${index}">-</button>
+      <div class="mx-2 cart-sum">${e.quantity}</div>
+      <button class="increment-btn btn btn-outline-secondary" data-index="${index}">+</button>
+    </div>`));
+    htmlCart += `<div class="dropdown-divider"></div><a class="dropdown-item" href="#">Total sum: ${overallPrice} SEK</a>`;
+
+  htmlMain.innerHTML = htmlCart;
   htmlMain.classList.add("show");
+
+  // Add event listeners to +/- buttons
+  const decrementButtons = document.querySelectorAll(".decrement-btn");
+  const incrementButtons = document.querySelectorAll(".increment-btn");
+
+  decrementButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      
+      console.log("decrement!")
+
+      const index = button.getAttribute("data-index");
+
+      if (index !== null) {
+        bookCart[index].quantity -= 1;
+
+        if (bookCart[index].quantity == 0)
+        {
+          
+          let title = bookCart[index].title;
+          let price = bookCart[index].price;
+        
+          removeFromCart(title, price);
+        }
+        else 
+        {
+          let price = bookCart[index].price;
+          overallPrice -= Number(price);
+        }
+        
+        loadCart(); // Update the cart display
+      }
+    });
+  });
+
+  incrementButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      
+      console.log("increment!")
+      
+      const index = button.getAttribute("data-index");
+
+      if (index !== null) {
+        
+        bookCart[index].quantity += 1;
+        let price = bookCart[index].price;
+        overallPrice += Number(price);
+        
+        loadCart(); // Update the cart display
+      }
+    });
+  });
 }
 
 // Add an event listener to the dropdown menu to remove the "show" class when the menu is closed
@@ -110,7 +190,7 @@ function loadHome(bookState) {
         <div class="card-body">
             <h5 class="card-title"> Title: ${book.title} </h5>
             <h6 class="card-author"> Author: ${book.author} </h6>
-            <h6 class="card-price"> Price: ${book.price} kr </h6>
+            <h6 > Price: <h6 class="card-price">${book.price}</h6> kr </h6>
             <h6 class="card-category"> Category: ${book.category} </h6>
         </div>
         <div class="card-body">
@@ -124,7 +204,7 @@ function loadHome(bookState) {
         <div class="modal-dialog">
             <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Book title: ${book.title} </h5>
+                <h5 class="modal-title" id="exampleModalLabel">Title: ${book.title} </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -159,7 +239,7 @@ function loadHome(bookState) {
       
       let selectedTitle = purchase.parentElement.parentElement.querySelector(".card-title");
       let selectedPrice = purchase.parentElement.parentElement.querySelector(".card-price");
-      
+      console.log("the selected price", selectedPrice);
       addToCart(selectedTitle, selectedPrice);
     });
   });
