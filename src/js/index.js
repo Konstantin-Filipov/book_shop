@@ -31,7 +31,6 @@ async function getBookIndex(selectedTitle)
 }
 async function removeFromCart(title, price)
 {
-  console.log("comsddddddddddddddddddd", title,price);
   let index = await getBookIndex(title)
 
   //delete the item from array
@@ -53,9 +52,10 @@ async function addToCart(selectedTitle, selectedPrice) {
   payload = {
     title: selectedTitle.textContent,
     price: Number(selectedPrice.textContent),
-    quantity: defaultQuantity
+    quantity: defaultQuantity,
+    sumPrice: Number(selectedPrice.textContent)
   };
-  console.log("Payoad data: ", payload.price);
+  console.log("Payload- sumPrice: ", payload.sumPrice);
   //if book title is NOT in shop cart, add to shop cart 
   if (!(await bookRepeat(payload.title)))
   {
@@ -69,11 +69,8 @@ async function addToCart(selectedTitle, selectedPrice) {
   }
   
   //update overall price
-
   let price = payload.price;
-  console.log("in AddToCart: price", price);
   overallPrice += price;
-  console.log("in AddToCart: ", overallPrice);
 }
 
 
@@ -90,8 +87,9 @@ function loadCart() {
     <div class="d-flex align-items-center p-1">
       <a class="dropdown-item" href="#">${e.title} ${e.price}</a>
       <button class="decrement-btn btn btn-outline-secondary" data-index="${index}">-</button>
-      <div class="mx-2 cart-sum">${e.quantity}</div>
+      <div class="mx-2 cart-quantity">${e.quantity}</div>
       <button class="increment-btn btn btn-outline-secondary" data-index="${index}">+</button>
+      <div class="mx-2 cart-sum">${e.sumPrice}</div>
     </div>`));
     htmlCart += `<div class="dropdown-divider"></div><a class="dropdown-item" href="#">Total sum: ${overallPrice} SEK</a>`;
 
@@ -123,6 +121,9 @@ function loadCart() {
         else 
         {
           let price = bookCart[index].price;
+          
+          bookCart[index].sumPrice -= price;
+          
           overallPrice -= Number(price);
         }
         
@@ -140,8 +141,11 @@ function loadCart() {
 
       if (index !== null) {
         
-        bookCart[index].quantity += 1;
         let price = bookCart[index].price;
+        
+        bookCart[index].quantity += 1;
+        bookCart[index].sumPrice += price;
+        
         overallPrice += Number(price);
         
         loadCart(); // Update the cart display
