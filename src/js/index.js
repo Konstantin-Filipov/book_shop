@@ -49,7 +49,7 @@ async function addToCart(selectedTitle, selectedPrice) {
 
   let defaultQuantity = 1;
 
-  payload = {
+  let payload = {
     title: selectedTitle.textContent,
     price: Number(selectedPrice.textContent),
     quantity: defaultQuantity,
@@ -66,6 +66,7 @@ async function addToCart(selectedTitle, selectedPrice) {
   {
     let index = await getBookIndex(payload.title)
     bookCart[index].quantity += 1;  //increase quantity of the book by 1
+    bookCart[index].sumPrice = bookCart[index].price *  bookCart[index].quantity;
   }
   
   //update overall price
@@ -179,12 +180,14 @@ async function load() {
 
 /** Find the #books element and add books in this function*/
 function loadHome(bookState) {
+  
   console.log("books", bookState);
-  /** set booksHtml to empty string
-   *
-   */
+  
+  // set booksHtml to empty string
   let booksHtml = "";
+  
   let booksRow = document.querySelector("#books");
+  
   bookState.map((book, index) => {
     booksHtml += `
     <div class="col-xxl-2 col-xl-3 col-lg-3 col-md-4 col-sm-6">
